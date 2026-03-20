@@ -1,0 +1,9 @@
+{
+	"name": "pmo-adf-001",
+	"location": "southindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "1743ce43-2e9a-4285-9525-f2145cb27856",
+		"tenantId": "21e761b2-159c-4ae5-b0ae-73204479b5bc"
+	}
+}

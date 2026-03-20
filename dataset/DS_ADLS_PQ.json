@@ -1,0 +1,49 @@
+{
+	"name": "DS_ADLS_PQ",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_adlsgen2",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"p_source_schema_name": {
+				"type": "string"
+			},
+			"p_source_table_name": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "Actual_poc"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@concat('/',dataset().p_source_schema_name,'/',dataset().p_source_table_name)",
+					"type": "Expression"
+				},
+				"folderPath": "landing/refill_hsitory",
+				"fileSystem": "ingestion"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "emp_id",
+				"type": "UTF8"
+			},
+			{
+				"name": "emp_name",
+				"type": "UTF8"
+			},
+			{
+				"name": "dept",
+				"type": "UTF8"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
