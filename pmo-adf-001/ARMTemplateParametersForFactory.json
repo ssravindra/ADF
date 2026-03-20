@@ -1,0 +1,27 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "pmo-adf-001"
+		},
+		"ls_adlsgen2_accountKey": {
+			"value": ""
+		},
+		"ls_azuresqldb_password": {
+			"value": ""
+		},
+		"ls_adlsgen2_properties_typeProperties_url": {
+			"value": "https://pmostorageaccnt001.dfs.core.windows.net/"
+		},
+		"ls_azuresqldb_properties_typeProperties_server": {
+			"value": "pm-sqlserver-001.database.windows.net"
+		},
+		"ls_azuresqldb_properties_typeProperties_database": {
+			"value": "pm-sqldb-001"
+		},
+		"ls_azuresqldb_properties_typeProperties_userName": {
+			"value": "ravindra"
+		}
+	}
+}
