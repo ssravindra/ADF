@@ -1,0 +1,121 @@
+{
+	"name": "POC_Pipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "Cpy_Act_adlspq2asqltbl",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "ParquetSource",
+						"additionalColumns": [
+							{
+								"name": "created_by",
+								"value": {
+									"value": "@pipeline().DataFactory",
+									"type": "Expression"
+								}
+							},
+							{
+								"name": "modified_date",
+								"value": {
+									"value": "@utcNow()",
+									"type": "Expression"
+								}
+							},
+							{
+								"name": "modified_by",
+								"value": {
+									"value": "@pipeline().RunId",
+									"type": "Expression"
+								}
+							}
+						],
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"wildcardFileName": "*.parquet",
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "ParquetReadSettings"
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_ADLS_PQ",
+						"type": "DatasetReference",
+						"parameters": {
+							"p_source_schema_name": {
+								"value": "@pipeline().parameters.source_schema",
+								"type": "Expression"
+							},
+							"p_source_table_name": {
+								"value": "@pipeline().parameters.source_table",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_ASQL_TBL",
+						"type": "DatasetReference",
+						"parameters": {
+							"p_target_schema_name": {
+								"value": "@pipeline().parameters.target_schema",
+								"type": "Expression"
+							},
+							"p_target_table_name": {
+								"value": "@pipeline().parameters.target_table",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			}
+		],
+		"parameters": {
+			"source_schema": {
+				"type": "string"
+			},
+			"source_table": {
+				"type": "string"
+			},
+			"target_schema": {
+				"type": "string"
+			},
+			"target_table": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "Actual_poc"
+		},
+		"annotations": []
+	}
+}
